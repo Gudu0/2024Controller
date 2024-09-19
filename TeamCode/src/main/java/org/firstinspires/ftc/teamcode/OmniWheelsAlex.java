@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+//import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -73,6 +74,10 @@ public class OmniWheels extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
+    //private DcMotor LinearSampleGrabber = null;
+    //private DcMotor LinearBucketPutter = null;
+    //private Servo Samples;
+    //private Servo Bucket;
 
     @Override
     public void runOpMode() {
@@ -83,6 +88,10 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        //SampleGrabber = hardwareMap.get(DcMotor.class, "sample_grabber");
+        //BucketPutter = hardwhareMap.get(DcMotor.class, "bucket_putter");
+        //servo = hardwareMap.get(Servo.class, "sample");
+        //servo = hardwareMap.get(Servo.class, "bucket");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -109,6 +118,11 @@ public class OmniWheels extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
+            // static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
+            // static final int    CYCLE_MS    =   50;     // period of each cycle
+            // static final double MAX_POS     =  1.0;     // Maximum rotational position
+            // static final double MIN_POS     =  0.0;     // Minimum rotational position
+            // int extend = gamepad1.x ? 1.0 : 0.0;  // X gamepad
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value -- forward/backward movement.
