@@ -90,8 +90,8 @@ public class OmniWheels extends LinearOpMode {
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         //SampleGrabber = hardwareMap.get(DcMotor.class, "sample_grabber");
         //BucketPutter = hardwhareMap.get(DcMotor.class, "bucket_putter");
-        //servo = hardwareMap.get(Servo.class, "sample");
-        //servo = hardwareMap.get(Servo.class, "bucket");
+        //Samples = hardwareMap.get(Servo.class, "sample_servo");
+        //Bucket = hardwareMap.get(Servo.class, "bucket_servo");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -107,6 +107,8 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        //SampleGrabber.setDirection(DcMotot.Direction.FORWARD);
+        //BucketPutter.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("High Five", "We Roboted!!!");
@@ -122,7 +124,7 @@ public class OmniWheels extends LinearOpMode {
             // static final int    CYCLE_MS    =   50;     // period of each cycle
             // static final double MAX_POS     =  1.0;     // Maximum rotational position
             // static final double MIN_POS     =  0.0;     // Minimum rotational position
-            // int extend = gamepad1.x ? 1.0 : 0.0;  // X gamepad
+            // int extend = gamepad1.x ? 1.0 : 0.0;  // X gamepad    
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value -- forward/backward movement.
