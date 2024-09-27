@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-//import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -74,10 +74,10 @@ public class OmniWheels extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-    //private DcMotor LinearSampleGrabber = null;
-    //private DcMotor LinearBucketPutter = null;
-    //private Servo Samples;
-    //private Servo Bucket;
+    private DcMotor LinearSampleGrabber = null;
+    private DcMotor LinearBucketPutter = null;
+    private Servo Samples;
+    private Servo Bucket;
 
     @Override
     public void runOpMode() {
@@ -88,10 +88,10 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        //SampleGrabber = hardwareMap.get(DcMotor.class, "sample_grabber");
-        //BucketPutter = hardwhareMap.get(DcMotor.class, "bucket_putter");
-        //Samples = hardwareMap.get(Servo.class, "sample_servo");
-        //Bucket = hardwareMap.get(Servo.class, "bucket_servo");
+        SampleGrabber = hardwareMap.get(DcMotor.class, "sample_grabber");
+        BucketPutter = hardwhareMap.get(DcMotor.class, "bucket_putter");
+        Samples = hardwareMap.get(Servo.class, "sample_servo");
+        Bucket = hardwareMap.get(Servo.class, "bucket_servo");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -107,8 +107,8 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        //SampleGrabber.setDirection(DcMotot.Direction.FORWARD);
-        //BucketPutter.setDirection(DcMotor.Direction.FORWARD);
+        SampleGrabber.setDirection(DcMotot.Direction.FORWARD);
+        BucketPutter.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("High Five", "We Roboted!!!");
@@ -120,17 +120,23 @@ public class OmniWheels extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
-            // static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
-            // static final int    CYCLE_MS    =   50;     // period of each cycle
-            // static final double MAX_POS     =  1.0;     // Maximum rotational position
-            // static final double MIN_POS     =  0.0;     // Minimum rotational position
-            // int extend = gamepad1.x ? 1.0 : 0.0;  // X gamepad    
+             static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
+             static final int    CYCLE_MS    =   50;     // period of each cycle
+             static final double MAX_POS     =  1.0;     // Maximum rotational position
+             static final double MIN_POS     =  0.0;     // Minimum rotational position
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value -- forward/backward movement.
             double lateral =  gamepad1.right_stick_x;  // Lateral is strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Yaw is rotate left/right
 
+            boolean raiseLA = x;
+            boolean lowerLA = y;
+            boolean closeSG = right_trigger > 0.3;
+            boolean closeBP = left_trigger > 0.3;
+            boolean openSG  = right_bumper;
+            boolean openBP  = left_bumper;
+            
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
             double leftFrontPower  = axial + lateral + yaw;
@@ -150,7 +156,18 @@ public class OmniWheels extends LinearOpMode {
                 leftBackPower   /= max;
                 rightBackPower  /= max;
             }
-
+            
+            if (closeSG == true) {
+                SampleGrabber.setPosition(Math.min(1.0,SampleGrabber.setPosition()+0.01));
+            } else if (openSG == true) {
+                SampleGrabber.setPosition(Math.max(0.0,SampleGrabber.setPosition()-0.01))
+            }
+               if (closeBP == true) {
+                BucketPutter.setPosition(Math.min(1.0,BucketPutter.setPosition()+0.01));
+            } else if (openBP == true) {
+                BucketPutter.setPosition(Math.max(0.0,BucketPutter.setPosition()-0.01))
+            }
+            
             // This is test code:
             //
             // Uncomment the following code to test your motor directions.
