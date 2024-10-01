@@ -35,6 +35,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
+import java.util.List;
+import jaca.util.ArrayList;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -79,6 +81,9 @@ public class OmniWheels extends LinearOpMode {
     private Servo Samples;
     private Servo Bucket;
 
+    List<DcMotor> allMotors = new ArrayList<>();
+    List<Servo> allServos = new ArrayList<>();
+    
     @Override
     public void runOpMode() {
 
@@ -92,6 +97,15 @@ public class OmniWheels extends LinearOpMode {
         BucketPutter = hardwhareMap.get(DcMotor.class, "bucket_putter");
         Samples = hardwareMap.get(Servo.class, "sample_servo");
         Bucket = hardwareMap.get(Servo.class, "bucket_servo");
+
+        allMotors.add(leftFrontDrive);
+        allMotors.add(rightFrontDrive);
+        allMotors.add(leftBackDrive);
+        allMotors.add(rightBackDrive);
+        allMotors.add(SampleGrabber);
+        allMotors.add(BucketPutter);
+        allServos.add(Samples);
+        allServos.add(Bucket);
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -130,12 +144,16 @@ public class OmniWheels extends LinearOpMode {
             double lateral =  gamepad1.right_stick_x;  // Lateral is strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Yaw is rotate left/right
 
+            telemetry.addData ("Axial", axial;)
+            telemetry.addData ("Lateral", lateral;)
+            telemetry.addData ("Yaw", yaw;)
+            
             boolean raiseLA = x;
             boolean lowerLA = y;
-            boolean closeSG = right_trigger > 0.3;
-            boolean closeBP = left_trigger > 0.3;
-            boolean openSG  = right_bumper;
-            boolean openBP  = left_bumper;
+            boolean closeS = right_trigger > 0.3;
+            boolean closeB = left_trigger > 0.3;
+            boolean openS  = right_bumper;
+            boolean openB  = left_bumper;
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -157,15 +175,15 @@ public class OmniWheels extends LinearOpMode {
                 rightBackPower  /= max;
             }
             
-            if (closeSG == true) {
-                SampleGrabber.setPosition(Math.min(1.0,SampleGrabber.setPosition()+0.01));
-            } else if (openSG == true) {
-                SampleGrabber.setPosition(Math.max(0.0,SampleGrabber.setPosition()-0.01))
+            if (closeS == true) {
+                Samples.setPosition(Math.min(1.0,Samples.setPosition()+0.01));
+            } else if (openS == true) {
+                Samples.setPosition(Math.max(0.0,Samples.setPosition()-0.01))
             }
-               if (closeBP == true) {
-                BucketPutter.setPosition(Math.min(1.0,BucketPutter.setPosition()+0.01));
-            } else if (openBP == true) {
-                BucketPutter.setPosition(Math.max(0.0,BucketPutter.setPosition()-0.01))
+               if (closeB == true) {
+                Bucket.setPosition(Math.min(1.0,Bucket.setPosition()+0.01));
+            } else if (openB == true) {
+                Bucket.setPosition(Math.max(0.0,Bucket.setPosition()-0.01))
             }
             
             // This is test code:
@@ -192,9 +210,15 @@ public class OmniWheels extends LinearOpMode {
             rightBackDrive.setPower(rightBackPower);
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
-            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+            // telemetry.addData("Status", "Run Time: " + runtime.toString());
+            // telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
+            // telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+            for (DcMotor thisMotor in allMotors({
+                telemetry.addData("MotorSpeed", thisMotor.getSpeed());
+            }
+             for (Servo thisServo in allServos({
+                telemetry.addData("ServoPosition", thisServo.getPosition());
+            }
             telemetry.update();
         }
     }}
