@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import java.util.ArrayList;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -134,26 +135,26 @@ public class OmniWheels extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             double max;
-             static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
-             static final int    CYCLE_MS    =   50;     // period of each cycle
-             static final double MAX_POS     =  1.0;     // Maximum rotational position
-             static final double MIN_POS     =  0.0;     // Minimum rotational position
+            final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
+            final int    CYCLE_MS    =   50;     // period of each cycle
+            final double MAX_POS     =  1.0;     // Maximum rotational position
+            final double MIN_POS     =  0.0;     // Minimum rotational position
 
             // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
             double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value -- forward/backward movement.
             double lateral =  gamepad1.right_stick_x;  // Lateral is strafe left/right
             double yaw     =  gamepad1.left_stick_x; // Yaw is rotate left/right
 
-            telemetry.addData ("Axial", axial;)
-            telemetry.addData ("Lateral", lateral;)
-            telemetry.addData ("Yaw", yaw;)
+            telemetry.addData ("Axial", axial);
+            telemetry.addData ("Lateral", lateral);
+            telemetry.addData ("Yaw", yaw);
             
-            boolean raiseLA = x;
-            boolean lowerLA = y;
-            boolean closeS = right_trigger > 0.3;
-            boolean closeB = left_trigger > 0.3;
-            boolean openS  = right_bumper;
-            boolean openB  = left_bumper;
+            boolean raiseLA = gamepad2.x;
+            boolean lowerLA = gamepad2.y;
+            boolean closeS = gamepad2.right_trigger > 0.3;
+            boolean closeB = gamepad2.left_trigger > 0.3;
+            boolean openS  = gamepad2.right_bumper;
+            boolean openB  = gamepad2.left_bumper;
             
             // Combine the joystick requests for each axis-motion to determine each wheel's power.
             // Set up a variable for each drive wheel to save the power level for telemetry.
@@ -178,12 +179,12 @@ public class OmniWheels extends LinearOpMode {
             if (closeS == true) {
                 Samples.setPosition(Math.min(1.0,Samples.setPosition()+0.01));
             } else if (openS == true) {
-                Samples.setPosition(Math.max(0.0,Samples.setPosition()-0.01))
+                Samples.setPosition(Math.max(0.0,Samples.setPosition()-0.01));
             }
                if (closeB == true) {
                 Bucket.setPosition(Math.min(1.0,Bucket.setPosition()+0.01));
             } else if (openB == true) {
-                Bucket.setPosition(Math.max(0.0,Bucket.setPosition()-0.01))
+                Bucket.setPosition(Math.max(0.0,Bucket.setPosition()-0.01));
             }
             
             // This is test code:
@@ -213,10 +214,10 @@ public class OmniWheels extends LinearOpMode {
             // telemetry.addData("Status", "Run Time: " + runtime.toString());
             // telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             // telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
-            for (DcMotor thisMotor in allMotors({
+            for (DcMotor thisMotor : allMotors){
                 telemetry.addData("MotorSpeed", thisMotor.getSpeed());
             }
-             for (Servo thisServo in allServos({
+             for (Servo thisServo : allServos){
                 telemetry.addData("ServoPosition", thisServo.getPosition());
             }
             telemetry.update();
