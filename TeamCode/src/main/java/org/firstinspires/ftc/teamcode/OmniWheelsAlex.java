@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 import java.util.List;
-import jaca.util.ArrayList;
+import java.util.ArrayList;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -69,7 +69,7 @@ import jaca.util.ArrayList;
 
 @TeleOp(name="OmniWheels 0.1", group="Linear OpMode")
 @Disabled
-public class OmniWheels extends LinearOpMode {
+public class OmniWheelsAlex extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -94,8 +94,8 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        SampleGrabber = hardwareMap.get(DcMotor.class, "sample_grabber");
-        BucketPutter = hardwhareMap.get(DcMotor.class, "bucket_putter");
+        LinearSampleGrabber = hardwareMap.get(DcMotor.class, "sample_grabber");
+        LinearBucketPutter = hardwareMap.get(DcMotor.class, "bucket_putter");
         Samples = hardwareMap.get(Servo.class, "sample_servo");
         Bucket = hardwareMap.get(Servo.class, "bucket_servo");
 
@@ -103,8 +103,8 @@ public class OmniWheels extends LinearOpMode {
         allMotors.add(rightFrontDrive);
         allMotors.add(leftBackDrive);
         allMotors.add(rightBackDrive);
-        allMotors.add(SampleGrabber);
-        allMotors.add(BucketPutter);
+        allMotors.add(LinearSampleGrabber);
+        allMotors.add(LinearBucketPutter);
         allServos.add(Samples);
         allServos.add(Bucket);
 
@@ -122,8 +122,8 @@ public class OmniWheels extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-        SampleGrabber.setDirection(DcMotot.Direction.FORWARD);
-        BucketPutter.setDirection(DcMotor.Direction.FORWARD);
+        LinearSampleGrabber.setDirection(DcMotor.Direction.FORWARD);
+        LinearBucketPutter.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("High Five", "We Roboted!!!");
@@ -177,14 +177,14 @@ public class OmniWheels extends LinearOpMode {
             }
             
             if (closeS == true) {
-                Samples.setPosition(Math.min(1.0,Samples.setPosition()+0.01));
+                Samples.setPosition(Math.min(1.0,Samples.getPosition()+0.01));
             } else if (openS == true) {
-                Samples.setPosition(Math.max(0.0,Samples.setPosition()-0.01));
+                Samples.setPosition(Math.max(0.0,Samples.getPosition()-0.01));
             }
                if (closeB == true) {
-                Bucket.setPosition(Math.min(1.0,Bucket.setPosition()+0.01));
+                Bucket.setPosition(Math.min(1.0,Bucket.getPosition()+0.01));
             } else if (openB == true) {
-                Bucket.setPosition(Math.max(0.0,Bucket.setPosition()-0.01));
+                Bucket.setPosition(Math.max(0.0,Bucket.getPosition()-0.01));
             }
             
             // This is test code:
@@ -215,7 +215,7 @@ public class OmniWheels extends LinearOpMode {
             // telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             // telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
             for (DcMotor thisMotor : allMotors){
-                telemetry.addData("MotorSpeed", thisMotor.getSpeed());
+                telemetry.addData("MotorSpeed", thisMotor.getPower());
             }
              for (Servo thisServo : allServos){
                 telemetry.addData("ServoPosition", thisServo.getPosition());
