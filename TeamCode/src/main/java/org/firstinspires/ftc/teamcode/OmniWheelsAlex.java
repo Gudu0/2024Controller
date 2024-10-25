@@ -186,7 +186,13 @@ public class OmniWheelsAlex extends LinearOpMode {
             } else if (openB == true) {
                 Bucket.setPosition(Math.max(0.0,Bucket.getPosition()-0.01));
             }
-            
+            if (raiseLA == true){
+                LinearSampleGrabber.setPower(raiseLA);
+                LinearBucketPutter.setPower(raiseLA);
+            } else if (lowerLA == true){
+                LinearSampleGrabber.setPower(-raiseLA);
+                LinearBucketPutter.setPower(-raiseLA);
+            }
             // This is test code:
             //
             // Uncomment the following code to test your motor directions.
