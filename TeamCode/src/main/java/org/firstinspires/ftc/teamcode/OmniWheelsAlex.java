@@ -187,11 +187,11 @@ public class OmniWheelsAlex extends LinearOpMode {
                 Bucket.setPosition(Math.max(0.0,Bucket.getPosition()-0.01));
             }
             if (raiseLA == true){
-                LinearSampleGrabber.setPower(raiseLA);
-                LinearBucketPutter.setPower(raiseLA);
+                LinearSampleGrabber.setPower(1);
+                LinearBucketPutter.setPower(1);
             } else if (lowerLA == true){
-                LinearSampleGrabber.setPower(-raiseLA);
-                LinearBucketPutter.setPower(-raiseLA);
+                LinearSampleGrabber.setPower(-1);
+                LinearBucketPutter.setPower(-1);
             }
             // This is test code:
             //
