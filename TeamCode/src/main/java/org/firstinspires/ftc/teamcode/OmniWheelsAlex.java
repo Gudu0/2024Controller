@@ -191,7 +191,7 @@ public class OmniWheelsAlex extends LinearOpMode {
             } else if (lowerLA == true){
                 LinearSampleGrabber.setPower(-1);
                 LinearBucketPutter.setPower(-1);
-            }  else if (lowerLA && raiseLA == false){
+            }  else if (lowerLA == false && raiseLA == false){
                 LinearSampleGrabber.setPower(0);
                 LinearBucketPutter.setPower(0);
             }
