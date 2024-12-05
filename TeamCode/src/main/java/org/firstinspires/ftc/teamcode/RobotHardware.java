@@ -116,7 +116,7 @@ public class RobotHardware {
      * @param Drive     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      * @param Turn      Right/Left turning power (-1.0 to 1.0) +ve is CW
      */
-    public void driveRobot(double Drive, double Turn) {
+    public void driveRobot(double Drive, double Turn, double Strafe) {
         // Combine drive and turn for blended motion.
         double left  = Drive + Turn;
         double right = Drive - Turn;
@@ -139,29 +139,46 @@ public class RobotHardware {
      * @param leftWheel     Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      * @param rightWheel    Fwd/Rev driving power (-1.0 to 1.0) +ve is forward
      */
-    public void setDrivePower(double leftWheel, double rightWheel) {
-        // Output the values to the motor drives.
-        leftDrive.setPower(leftWheel);
-        rightDrive.setPower(rightWheel);
-    }
+// public void setDrivePower(double leftWheel, double rightWheel) {
+//     // Output the values to the motor drives.
+//     leftDrive.setPower(leftWheel);
+//     rightDrive.setPower(rightWheel);
+// }
 
     /**
      * Pass the requested arm power to the appropriate hardware drive motor
      *
      * @param power driving power (-1.0 to 1.0)
      */
-    public void setArmPower(double power) {
-        armMotor.setPower(power);
-    }
+// public void setArmPower(double power) {
+//     armMotor.setPower(power);
+// }
 
     /**
      * Send the two hand-servos to opposing (mirrored) positions, based on the passed offset.
      *
      * @param offset
      */
-    public void setHandPositions(double offset) {
-        offset = Range.clip(offset, -0.5, 0.5);
+    public void SweeperPositions(double off) {
+        off = Range.clip(offset, -0.5, 0.5);
         leftHand.setPosition(MID_SERVO + offset);
         rightHand.setPosition(MID_SERVO - offset);
+    }
+
+    public void StandUp(double Inches){
+        anything
+    }
+    
+    public void LiftScrew(double Inches){
+        anything
+    }
+    public void ToggleSweeper(){
+        anything
+    }
+    public void SetScrewPower(double Spin){
+    
+    }
+    public void ToggleDepositSample(){
+        
     }
 }
