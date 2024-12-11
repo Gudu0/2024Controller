@@ -79,6 +79,9 @@ public class AutoWithHardware extends LinearOpMode {
         double arm          = 0;
         double handOffset   = 0;
 
+        double INCHES_2_TICKS = 90;
+        double TICKS_2_INCHES = 1/INCHES_2_TICKS;
+
         // initialize all the hardware, using the hardware class. See how clean and simple this is?
         robot.init();
 
@@ -88,40 +91,31 @@ public class AutoWithHardware extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-
-            // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
-            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-            // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
-            turn  =  gamepad1.right_stick_x;
-
-            // Combine drive and turn for blended motion. Use RobotHardware class
-            robot.driveRobot(drive, turn);
-
-            // Use gamepad left & right Bumpers to open and close the claw
-            // Use the SERVO constants defined in RobotHardware class.
-            // Each time around the loop, the servos will move by a small amount.
-            // Limit the total offset to half of the full travel range
-            if (gamepad1.right_bumper)
-                handOffset += robot.HAND_SPEED;
-            else if (gamepad1.left_bumper)
-                handOffset -= robot.HAND_SPEED;
-            handOffset = Range.clip(handOffset, -0.5, 0.5);
-
-            // Move both servos to new position.  Use RobotHardware class
-            robot.setHandPositions(handOffset);
-
-            // Use gamepad buttons to move arm up (Y) and down (A)
-            // Use the MOTOR constants defined in RobotHardware class.
-            if (gamepad1.y)
-                arm = robot.ARM_UP_POWER;
-            else if (gamepad1.a)
-                arm = robot.ARM_DOWN_POWER;
-            else
-                arm = 0;
-
-            robot.setArmPower(arm);
-
+            //my numbers are just turning the feet from my sheet into numbers on here, so I'll have to adjust/account for it later, or change all the values. 
+            //assuming left and back is negative from the red side facing the submersible.
+            //added a bit forward so we dont scrape the wall, left 7ft to get to the net zone and score the preloaded sample.
+            robot.driveRobot(0,0.2,-7);
+            sleep(10);
+            //moving back to line up to get a neutral sample
+            robot.driveRobot(0,0,1);
+            sleep(10);
+            //repeats this step 3 times, gettin all 3 neutral samples (hopefully)
+            for(int pass = 0; pass<3; pass++){
+                //getting befind the neutral samples
+                robot.driveRobot(5,0,0);
+                 sleep(10);
+                //lining up
+                robot.driveRobot(0,0,-1);
+                 sleep(10);
+                //pusing it back to net zone
+                robot.driveRobot(-5,0,0);
+                 sleep(10);
+            }
+            //back to observation zone to park.
+            robot.driveRobot(0,0,8);
+             sleep(10);
+            
+            
             // Send telemetry messages to explain controls and show robot status
             telemetry.addData("Drive", "Left Stick");
             telemetry.addData("Turn", "Right Stick");
