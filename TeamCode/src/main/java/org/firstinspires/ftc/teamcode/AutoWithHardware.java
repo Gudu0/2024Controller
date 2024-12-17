@@ -94,26 +94,34 @@ public class AutoWithHardware extends LinearOpMode {
             //my numbers are just turning the feet from my sheet into numbers on here, so I'll have to adjust/account for it later, or change all the values. 
             //assuming left and back is negative from the red side facing the submersible.
             //added a bit forward so we dont scrape the wall, left 7ft to get to the net zone and score the preloaded sample.
-            robot.driveRobot(0,0.2,-7);
-            sleep(10);
+            robot.driveRobot(1,0,0);
+            sleep(0.5*12*INCHES_TO_TICKS);
+            robot.driveRobot(0,0,-1);
+            sleep(7*12*INCHES_TO_TICKS);
+            robot.driveRobot(0,0,0);
+            sleep(100);
             //moving back to line up to get a neutral sample
             robot.driveRobot(0,0,1);
-            sleep(10);
+            sleep(1*12*INCHES_TO_TICKS);
+            sleep(100);
             //repeats this step 3 times, gettin all 3 neutral samples (hopefully)
             for(int pass = 0; pass<3; pass++){
                 //getting befind the neutral samples
-                robot.driveRobot(5,0,0);
-                 sleep(10);
+                robot.driveRobot(1,0,0);
+                 sleep(5*12*INCHES_TO_TICKS);
+                 sleep(100);
                 //lining up
                 robot.driveRobot(0,0,-1);
-                 sleep(10);
+                 sleep(1*12*INCHES_TO_TICKS);
+                 sleep(100);
                 //pusing it back to net zone
-                robot.driveRobot(-5,0,0);
-                 sleep(10);
+                robot.driveRobot(-1,0,0);
+                 sleep(5*12*INCHES_TO_TICKS);
+                 sleep(100);
             }
             //back to observation zone to park.
-            robot.driveRobot(0,0,8);
-             sleep(10);
+            robot.driveRobot(0,0,1);
+            sleep(8*12*INCHES_TO_TICKS);
             
             
             // Send telemetry messages to explain controls and show robot status
